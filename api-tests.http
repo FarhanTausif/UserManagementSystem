@@ -1,0 +1,23 @@
+### Create Role
+POST http://localhost:8080/roles
+Content-Type: application/json
+
+{
+  "roleName": "STUDENT"
+}
+
+### Create User
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "Farhan Tausif",
+  "email": "bsse1440@iit.du.ac.bd"
+}
+
+
+### Assign Role
+POST http://localhost:8080/users/{{userId}}/assign-role/{{roleId}}
+
+### Get User
+GET http://localhost:8080/users/{{userId}}

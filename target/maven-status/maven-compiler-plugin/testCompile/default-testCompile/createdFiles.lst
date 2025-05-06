@@ -1,0 +1,3 @@
+org/example/usermanagement/UserManagementApplicationTests.class
+org/example/usermanagement/application/UserServiceTest.class
+org/example/usermanagement/application/RoleServiceTest.class
