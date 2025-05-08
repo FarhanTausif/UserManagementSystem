@@ -9,7 +9,7 @@ The User Management System is a Spring Boot application designed to manage users
 - Create a role with a role name.
 - Assign a role to a user.
 - Retrieve user details, including assigned roles.
-- In-memory H2 database for persistence.
+- In-memory H2 database for persistence during runtime. 
 - Unit tests for the application layer.
 
 ## Project Structure
