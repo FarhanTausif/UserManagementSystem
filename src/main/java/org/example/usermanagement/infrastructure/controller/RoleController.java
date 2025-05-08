@@ -1,6 +1,7 @@
 package org.example.usermanagement.infrastructure.controller;
 
 import org.example.usermanagement.application.RoleService;
+import org.example.usermanagement.infrastructure.controller.dto.CreateRoleRequestDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,8 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<UUID> createRole(@Valid @RequestBody CreateRoleRequest request) {
+    public ResponseEntity<UUID> createRole(@Valid @RequestBody CreateRoleRequestDTO request) {
         UUID roleId = roleService.createRole(request.roleName());
         return new ResponseEntity<>(roleId, HttpStatus.CREATED);
     }
 }
-
-record CreateRoleRequest(
-        @jakarta.validation.constraints.NotBlank String roleName
-) {}

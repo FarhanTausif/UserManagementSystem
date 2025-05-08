@@ -10,47 +10,51 @@ The User Management System is a Spring Boot application designed to manage users
 - Assign a role to a user.
 - Retrieve user details, including assigned roles.
 - In-memory H2 database for persistence during runtime. 
-- Unit tests for the application layer.
+- Unit and integration tests for the application.
 
 ## Project Structure
 
 ```
-/UserManagement
-├── /src
-│   ├── /main
-│   │   ├── /java/org/example/usermanagement
-│   │   │   ├── /application
-│   │   │   │   ├── /interfaces
+/UserManagementSystem
+├── src/
+│   ├── main/
+│   │   ├── java/org/example/usermanagement/
+│   │   │   ├── application/
+│   │   │   │   ├── interfaces/
 │   │   │   │   │   ├── RoleRepository.java             # Interface for role data access
 │   │   │   │   │   ├── UserRepository.java             # Interface for user data access
 │   │   │   │   ├── RoleService.java                    # Business logic for role operations
 │   │   │   │   └── UserService.java                    # Business logic for user operations
-│   │   │   ├── /config
-│   │   │   │   └── BeanConfig.java                     # Spring bean definitions
-│   │   │   ├── /domain
+│   │   │   ├── config/
+│   │   │   │   ├── BeanConfig.java                     # Spring bean definitions
+│   │   │   │   └── OpenApiConfig.java                  # Swagger/OpenAPI config
+│   │   │   ├── domain/
 │   │   │   │   ├── Role.java                           # Domain model for Role
 │   │   │   │   └── User.java                           # Domain model for User
-│   │   │   ├── /infrastructure
-│   │   │   │   ├── /controller
+│   │   │   ├── infrastructure/
+│   │   │   │   ├── controller/
 │   │   │   │   │   ├── GlobalExceptionHandler.java     # Global error handling
 │   │   │   │   │   ├── RoleController.java             # REST controller for roles
-│   │   │   │   │   └── UserController.java             # REST controller for users
-│   │   │   │   └── /persistence
-│   │   │   │       ├── RoleEntity.java                 # JPA entity for Role
+│   │   │   │   │   ├── UserController.java             # REST controller for users
+│   │   │   │   │   └── dto/                            # DTOs for requests/responses
+│   │   │   │   └── persistence/
+│   │   │   │       ├── RoleJpaEntity.java              # JPA entity for Role
 │   │   │   │       ├── RoleJpaRepository.java          # Custom JPA impl for Role
 │   │   │   │       ├── RoleSpringDataRepository.java   # Spring Data repository for Role
-│   │   │   │       ├── UserEntity.java                 # JPA entity for User
+│   │   │   │       ├── UserJpaEntity.java              # JPA entity for User
 │   │   │   │       ├── UserJpaRepository.java          # Custom JPA impl for User
 │   │   │   │       └── UserSpringDataRepository.java   # Spring Data repository for User
 │   │   │   └── UserManagementApplication.java          # Spring Boot main application
-│   │   └── /resources
+│   │   └── resources/
 │   │       └── application.properties                  # Spring Boot configuration
-│   └── /test/java/org/example/usermanagement
-│       ├── /application
+│   └── test/java/org/example/usermanagement/
+│       ├── application/
 │       │   ├── RoleServiceTest.java                    # Unit test for RoleService
 │       │   └── UserServiceTest.java                    # Unit test for UserService
-│       └── UserManagementApplicationTests.java         # Integration test for application context
-├── /target                                             # Maven build output (ignored)
+│       ├── integration/
+│       │   └── UserManagementIntegrationTest.java      # Integration test for endpoints
+│       └── UserManagementApplicationTests.java         # Application context test
+├── target/                                             # Maven build output (ignored)
 ├── README.md                                           # Project documentation
 ├── api-tests.http                                      # Test REST API endpoints
 ├── mvnw                                                # Maven wrapper (Unix)
@@ -60,7 +64,7 @@ The User Management System is a Spring Boot application designed to manage users
 
 ## Prerequisites
 
-- **Java**: JDK 17 (or 24, as per your setup).
+- **Java**: JDK 17 (or newer).
 - **Maven**: 3.6.3 or higher.
 - **IntelliJ IDEA**: Recommended for development (or any IDE supporting Spring Boot).
 - **Postman**: For testing the REST API (download from https://www.postman.com/downloads/).
@@ -75,7 +79,7 @@ The User Management System is a Spring Boot application designed to manage users
 
 2. **Import the Project into IntelliJ IDEA**:
     - Open IntelliJ IDEA.
-    - Select `File > Open` and choose the `UserManagement` directory.
+    - Select `File > Open` and choose the `UserManagementSystem` directory.
     - IntelliJ will automatically detect the `pom.xml` file and set up the project.
 
 3. **Verify Dependencies**:
@@ -106,7 +110,11 @@ The User Management System is a Spring Boot application designed to manage users
       ```
 
 4. **Run the Application**:
-    - Right-click `UserManagementApplication.java` (in `src/main/java/org.example.usermanagement`) and select `Run 'UserManagementApplication'`.
+    - Right-click `UserManagementApplication.java` (in `src/main/java/org/example/usermanagement`) and select `Run 'UserManagementApplication'`.
+    - Or run from terminal:
+      ```bash
+      ./mvnw spring-boot:run
+      ```
     - The application will start on `http://localhost:8080`.
 
 5. **Access the H2 Console** (Optional):
@@ -126,7 +134,7 @@ The application exposes the following REST API endpoints:
 | POST   | `/users`                        | Create a new user               | `{"name":"John Doe","email":"john@example.com"}` | `"550e8400-e29b-41d4-a716-446655440001"` |
 | POST   | `/roles`                        | Create a new role               | `{"roleName":"ADMIN"}`                   | `"550e8400-e29b-41d4-a716-446655440000"` |
 | POST   | `/users/{userId}/assign-role/{roleId}` | Assign a role to a user         | (None)                                   | `"Role assigned successfully"`      |
-| GET    | `/users/{id}`                   | Retrieve user details           | (None)                                   | `{"id":"550e8400-e29b-41d4-a716-446655440001","name":"John Doe","email":"john@example.com","roles":[{"id":"550e8400-e29b-41d4-a716-446655440000","roleName":"ADMIN"}]}` |
+| GET    | `/users/{id}`                   | Retrieve user details           | (None)                                   | `{...}` |
 
 ## Example API Usage with Postman
 
@@ -184,6 +192,6 @@ The application exposes the following REST API endpoints:
 
 ## Running Tests
 
-- **Unit Tests**:
-    - Right-click the `application` package under `src/test/java/org.example.usermanagement` and select `Run Tests in 'application'`.
-    - Tests include `UserServiceTest` and `RoleServiceTest`.
+- **Unit and Integration Tests**:
+    - Right-click the `application` and `integration` packages under `src/test/java/org/example/usermanagement` and select `Run Tests`.
+    - Tests include `UserServiceTest`, `RoleServiceTest`, and `UserManagementIntegrationTest`.

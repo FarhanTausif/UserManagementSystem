@@ -1,4 +1,4 @@
-org/example/usermanagement/infrastructure/controller/CreateUserRequest.class
+org/example/usermanagement/infrastructure/controller/dto/CreateRoleRequestDTO.class
 org/example/usermanagement/UserManagementApplication.class
 org/example/usermanagement/infrastructure/persistence/RoleSpringDataRepository.class
 org/example/usermanagement/config/BeanConfig.class
@@ -6,8 +6,13 @@ org/example/usermanagement/application/RoleService.class
 org/example/usermanagement/infrastructure/persistence/RoleJpaEntity.class
 org/example/usermanagement/domain/User.class
 org/example/usermanagement/infrastructure/persistence/UserJpaEntity.class
+org/example/usermanagement/infrastructure/controller/dto/CreateUserRequestDTO.class
+org/example/usermanagement/infrastructure/controller/dto/RoleResponseDTO.class
+org/example/usermanagement/infrastructure/controller/dto/UserResponseDTO.class
 org/example/usermanagement/application/interfaces/UserRepository.class
 org/example/usermanagement/infrastructure/controller/UserController.class
+org/example/usermanagement/infrastructure/controller/dto/DtoMapper.class
+org/example/usermanagement/config/OpenApiConfig.class
 org/example/usermanagement/infrastructure/controller/RoleController.class
 org/example/usermanagement/domain/Role.class
 org/example/usermanagement/infrastructure/persistence/UserJpaRepository.class
@@ -16,4 +21,3 @@ org/example/usermanagement/application/interfaces/RoleRepository.class
 org/example/usermanagement/infrastructure/persistence/UserSpringDataRepository.class
 org/example/usermanagement/infrastructure/controller/GlobalExceptionHandler.class
 org/example/usermanagement/application/UserService.class
-org/example/usermanagement/infrastructure/controller/CreateRoleRequest.class

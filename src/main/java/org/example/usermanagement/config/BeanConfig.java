@@ -6,8 +6,10 @@ import org.example.usermanagement.application.interfaces.UserRepository;
 import org.example.usermanagement.application.interfaces.RoleRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Configuration
+@EnableJpaAuditing
 public class BeanConfig {
     @Bean
     public UserService userService(UserRepository userRepository, RoleRepository roleRepository) {

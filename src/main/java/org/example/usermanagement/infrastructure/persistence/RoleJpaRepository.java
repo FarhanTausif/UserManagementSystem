@@ -20,14 +20,18 @@ public class RoleJpaRepository implements RoleRepository {
         RoleJpaEntity entity = new RoleJpaEntity();
         entity.setId(role.getId());
         entity.setRoleName(role.getRoleName());
+        entity.setCreatedDate(role.getCreatedDate());
+        entity.setUpdatedDate(role.getUpdatedDate());
         RoleJpaEntity savedEntity = springDataRepository.save(entity);
-        return new Role(savedEntity.getId(), savedEntity.getRoleName());
+        return new Role(savedEntity.getId(), savedEntity.getRoleName(),
+                       savedEntity.getCreatedDate(), savedEntity.getUpdatedDate());
     }
 
     @Override
     public Optional<Role> findById(UUID id) {
         return springDataRepository.findById(id).map(entity ->
-                new Role(entity.getId(), entity.getRoleName())
+                new Role(entity.getId(), entity.getRoleName(),
+                        entity.getCreatedDate(), entity.getUpdatedDate())
         );
     }
 }

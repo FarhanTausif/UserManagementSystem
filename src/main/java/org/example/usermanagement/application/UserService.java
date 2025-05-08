@@ -4,6 +4,8 @@ import org.example.usermanagement.application.interfaces.UserRepository;
 import org.example.usermanagement.application.interfaces.RoleRepository;
 import org.example.usermanagement.domain.User;
 import org.example.usermanagement.domain.Role;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.UUID;
 
 public class UserService {
@@ -37,6 +39,19 @@ public class UserService {
         Role role = roleRepository.findById(roleId)
                 .orElseThrow(() -> new IllegalArgumentException("Role not found!"));
         user.assignRole(role);
+        userRepository.save(user);
+    }
+
+    public Page<User> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    public void removeRoleFromUser(UUID userId, UUID roleId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found!"));
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new IllegalArgumentException("Role not found!"));
+        user.removeRole(role);
         userRepository.save(user);
     }
 }
