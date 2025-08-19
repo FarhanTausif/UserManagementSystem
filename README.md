@@ -129,12 +129,62 @@ The User Management System is a Spring Boot application designed to manage users
 
 The application exposes the following REST API endpoints:
 
-| Method | Endpoint                         | Description                     | Request Body Example                     | Response Example                     |
-|--------|----------------------------------|---------------------------------|------------------------------------------|--------------------------------------|
-| POST   | `/users`                        | Create a new user               | `{"name":"John Doe","email":"john@example.com"}` | `"550e8400-e29b-41d4-a716-446655440001"` |
-| POST   | `/roles`                        | Create a new role               | `{"roleName":"ADMIN"}`                   | `"550e8400-e29b-41d4-a716-446655440000"` |
-| POST   | `/users/{userId}/assign-role/{roleId}` | Assign a role to a user         | (None)                                   | `"Role assigned successfully"`      |
-| GET    | `/users/{id}`                   | Retrieve user details           | (None)                                   | `{...}` |
+| Method | Endpoint                                 | Description                                 | Request Body Example                                                                                   | Response Example                                                                                                        |
+|--------|------------------------------------------|---------------------------------------------|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| POST   | /users                                   | Create a new user                           | `{ "name": "Alice", "email": "alice@example.com" }`                                                   | `UUID` (e.g., `"b8fdacb7-5f95-4d7e-8e23-3cd54e6e1d45"`)                                                               |
+| GET    | /users                                   | Get all users (paginated)                   | _N/A_                                                                                                 | `{ "content": [ { "id": "...", "name": "...", "email": "...", "roles": [...], "createdDate": "...", "updatedDate": "..." }, ... ], ... }` |
+| GET    | /users/{id}                              | Get user details by user ID                 | _N/A_                                                                                                 | `{ "id": "...", "name": "...", "email": "...", "roles": [ { "id": "...", "roleName": "...", "createdDate": "...", "updatedDate": "..." } ], "createdDate": "...", "updatedDate": "..." }` |
+| POST   | /users/{userId}/assign-role/{roleId}     | Assign a role to a user                     | _N/A_                                                                                                 | `"Role assigned successfully"`                                                                                          |
+| DELETE | /users/{userId}/remove-role/{roleId}     | Remove a role from a user                   | _N/A_                                                                                                 | `"Role removed successfully"`                                                                                           |
+| POST   | /roles                                   | Create a new role                           | `{ "roleName": "ADMIN" }`                                                                             | `UUID` (e.g., `"b5eedf1a-8a75-49a5-8c43-2f7a2c6a5b1b"`)                                                                |
+
+**Notes:**
+- All request and response bodies are in JSON format.
+- For paginated `GET /users`, see [Spring Data pagination](https://docs.spring.io/spring-data/commons/docs/current/reference/html/#repositories.paging-and-sorting) for details on request parameters and the structure of the response.
+- UUIDs are universally unique identifiers.
+
+**Example DTOs:**
+
+- **CreateUserRequestDTO**
+    ```json
+    {
+      "name": "Alice",
+      "email": "alice@example.com"
+    }
+    ```
+- **CreateRoleRequestDTO**
+    ```json
+    {
+      "roleName": "ADMIN"
+    }
+    ```
+- **UserResponseDTO**
+    ```json
+    {
+      "id": "b8fdacb7-5f95-4d7e-8e23-3cd54e6e1d45",
+      "name": "Alice",
+      "email": "alice@example.com",
+      "roles": [
+        {
+          "id": "b5eedf1a-8a75-49a5-8c43-2f7a2c6a5b1b",
+          "roleName": "ADMIN",
+          "createdDate": "2025-08-19T12:34:56",
+          "updatedDate": "2025-08-19T12:34:56"
+        }
+      ],
+      "createdDate": "2025-08-19T12:34:56",
+      "updatedDate": "2025-08-19T12:34:56"
+    }
+    ```
+- **RoleResponseDTO**
+    ```json
+    {
+      "id": "b5eedf1a-8a75-49a5-8c43-2f7a2c6a5b1b",
+      "roleName": "ADMIN",
+      "createdDate": "2025-08-19T12:34:56",
+      "updatedDate": "2025-08-19T12:34:56"
+    }
+    ```
 
 ## Example API Usage with Postman
 
